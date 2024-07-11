@@ -1,58 +1,77 @@
-import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FormControl, FormLabel, Input, Stack, Box } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Box,
+  Button,
+} from "@chakra-ui/react";
 
 const FormAgendamento = () => {
-  const [nome, setNome] = useState("");
-  const [nascData, setNascData] = useState(null);
-  const [agendData, setAgendData] = useState(null);
+  const { handleSubmit, control } = useForm();
 
-  const handleNascData = (data) => {
-    setNascData(data);
-  };
-  const handleAgendData = (data) => {
-    setAgendData(data);
+  const onSubmit = (data) => {
+    console.log("Dados do formulário:", data);
   };
 
   return (
-    <Stack spacing="8">
-      <FormControl id="Nome">
-        <FormLabel>Nome</FormLabel>
-        <Input
-          type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          required
-        />
-      </FormControl>
-      <FormControl id="Data de Nascimento">
-        <FormLabel>Data de Nascimento</FormLabel>
-        <Box>
-          <DatePicker
-            selected={nascData}
-            onChange={handleNascData}
-            maxDate={new Date()}
-            dateFormat="dd/MM/yyyy"
-            customInput={<Input />}
-            required
+    <Box as="form" onSubmit={handleSubmit(onSubmit)} width="330px">
+      <Stack spacing="6">
+        <FormControl id="Nome">
+          <FormLabel>Nome</FormLabel>
+          <Controller
+            name="nome"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <Input {...field} />}
           />
-        </Box>
-      </FormControl>
-      <FormControl id="Data de Agendamento">
-        <FormLabel>Data de Agendamento</FormLabel>
-        <Box>
-          <DatePicker
-            selected={agendData}
-            onChange={handleAgendData}
-            minDate={new Date()}
-            dateFormat="dd/MM/yyyy"
-            customInput={<Input />}
-            required
+        </FormControl>
+        <FormControl id="Data de Nascimento">
+          <FormLabel>Data de Nascimento</FormLabel>
+          <Controller
+            name="nascData"
+            control={control}
+            defaultValue={null}
+            render={({ field }) => (
+              <DatePicker
+                selected={field.value}
+                onChange={(data) => field.onChange(data)}
+                maxDate={new Date()}
+                dateFormat="dd/MM/yyyy"
+                customInput={<Input />}
+              />
+            )}
           />
-        </Box>
-      </FormControl>
-    </Stack>
+        </FormControl>
+        <FormControl id="Data de Agendamento">
+          <FormLabel>Data de Agendamento</FormLabel>
+          <Controller
+            name="agendData"
+            control={control}
+            defaultValue={null}
+            render={({ field }) => (
+              <DatePicker
+                selected={field.value}
+                onChange={(data) => field.onChange(data)}
+                minDate={new Date()}
+                dateFormat="dd/MM/yyyy HH:mm"
+                showTimeSelect
+                showTimeSelectOnly={false}
+                timeFormat="HH:mm"
+                timeIntervals={60}
+                customInput={<Input />}
+              />
+            )}
+          />
+        </FormControl>
+        <Button type="submit" width="120px" alignSelf="center" bg="#f7e3af">
+          Agendar
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 
