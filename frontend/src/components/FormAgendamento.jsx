@@ -15,12 +15,36 @@ import CustomDatePicker from "./CustomDatePicker";
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: "Informe seu nome" }),
-  nascData: z.date().nullable().refine((date) => date && date <= new Date(), {
-    message: "Informe a data de nascimento",
-  }),
-  agendData: z.date().nullable().refine((date) => date && date >= new Date(), {
-    message: "Informe a data de agendamento",
-  }),
+  nascData: z
+    .date()
+    .nullable()
+    .refine((date) => date && date <= new Date(), {
+      message: "Informe a data de nascimento",
+    }),
+  agendData: z
+    .date()
+    .nullable()
+    .refine(
+      (date) => {
+        return date !== null && date !== undefined;
+      },
+      {
+        message: "Informe a data de agendamento",
+      }
+    )
+    .refine(
+      (date) => {
+        return (
+          date &&
+          date >= new Date() &&
+          date.getHours() >= 7 &&
+          date.getHours() < 16
+        );
+      },
+      {
+        message: "Horário de agendamento deve estar entre 07:00 e 16:00",
+      }
+    ),
 });
 
 const FormAgendamento = () => {
@@ -81,6 +105,8 @@ const FormAgendamento = () => {
                 minDate={new Date()}
                 dateFormat="dd/MM/yyyy HH:mm"
                 showTimeSelect
+                minTime={new Date(0, 0, 0, 7, 0)}
+                maxTime={new Date(0, 0, 0, 16, 0)}
               />
             )}
           />
