@@ -12,6 +12,8 @@ const CustomDatePicker = ({
   dateFormat,
   timeFormat,
   timeIntervals,
+  minTime,
+  maxTime
 }) => {
   return (
     <DatePicker
@@ -23,6 +25,8 @@ const CustomDatePicker = ({
       dateFormat={dateFormat}
       timeFormat={timeFormat}
       timeIntervals={timeIntervals}
+      minTime={minTime}
+      maxTime={maxTime}
       customInput={<Input />}
     />
   );
@@ -36,7 +40,9 @@ CustomDatePicker.propTypes = {
   showTimeSelect: PropTypes.bool,
   dateFormat: PropTypes.string,
   timeFormat: PropTypes.string,
-  timeIntervals: PropTypes.number
+  timeIntervals: PropTypes.number,
+  minTime: PropTypes.instanceOf(Date),
+  maxTime: PropTypes.instanceOf(Date),
 };
 
 CustomDatePicker.defaultProps = {
@@ -47,6 +53,8 @@ CustomDatePicker.defaultProps = {
   dateFormat: "MM/dd/yyyy",
   timeFormat: "HH:mm",
   timeIntervals: 60,
+  minTime: new Date().setHours(0, 0), 
+  maxTime: new Date().setHours(23, 59), 
 };
 
 export default CustomDatePicker;
