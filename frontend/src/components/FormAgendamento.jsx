@@ -1,8 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
-import DatePicker from "react-datepicker";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import "react-datepicker/dist/react-datepicker.css";
 import {
   FormControl,
   FormLabel,
@@ -12,6 +10,8 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
+
+import CustomDatePicker from "./CustomDatePicker";
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: "Informe seu nome" }),
@@ -56,12 +56,11 @@ const FormAgendamento = () => {
             control={control}
             defaultValue={null}
             render={({ field }) => (
-              <DatePicker
+              <CustomDatePicker
                 selected={field.value}
                 onChange={(data) => field.onChange(data)}
                 maxDate={new Date()}
                 dateFormat="dd/MM/yyyy"
-                customInput={<Input />}
               />
             )}
           />
@@ -76,16 +75,12 @@ const FormAgendamento = () => {
             control={control}
             defaultValue={null}
             render={({ field }) => (
-              <DatePicker
+              <CustomDatePicker
                 selected={field.value}
                 onChange={(data) => field.onChange(data)}
                 minDate={new Date()}
                 dateFormat="dd/MM/yyyy HH:mm"
                 showTimeSelect
-                showTimeSelectOnly={false}
-                timeFormat="HH:mm"
-                timeIntervals={60}
-                customInput={<Input />}
               />
             )}
           />

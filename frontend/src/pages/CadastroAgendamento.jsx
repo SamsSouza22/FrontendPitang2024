@@ -6,7 +6,7 @@ const CadastroAgendamento = () => {
     <Flex minH={"100vh"} align={"center"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"3xl"}>Preencha os campos abaixo</Heading>
+          <Heading fontSize={"3xl"}>Realizar Agendamento</Heading>
         </Stack>
         <Box rounded={"lg"} boxShadow={"lg"} p={8} bg = "blue.100">
           <FormAgendamento />
