@@ -1,5 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   FormControl,
@@ -8,10 +10,27 @@ import {
   Stack,
   Box,
   Button,
+  Text,
 } from "@chakra-ui/react";
 
+const formSchema = z.object({
+  nome: z.string().min(1, { message: "Informe seu nome" }),
+  nascData: z.date().nullable().refine((date) => date && date <= new Date(), {
+    message: "Informe a data de nascimento",
+  }),
+  agendData: z.date().nullable().refine((date) => date && date >= new Date(), {
+    message: "Informe a data de agendamento",
+  }),
+});
+
 const FormAgendamento = () => {
-  const { handleSubmit, control } = useForm();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(formSchema),
+  });
 
   const onSubmit = (data) => {
     console.log("Dados do formulário:", data);
@@ -20,7 +39,7 @@ const FormAgendamento = () => {
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} width="330px">
       <Stack spacing="6">
-        <FormControl id="Nome">
+        <FormControl id="Nome" isInvalid={errors.nome}>
           <FormLabel>Nome</FormLabel>
           <Controller
             name="nome"
@@ -28,8 +47,9 @@ const FormAgendamento = () => {
             defaultValue=""
             render={({ field }) => <Input {...field} />}
           />
+          {errors.nome && <Text color="red.500">{errors.nome.message}</Text>}
         </FormControl>
-        <FormControl id="Data de Nascimento">
+        <FormControl id="Data de Nascimento" isInvalid={errors.nascData}>
           <FormLabel>Data de Nascimento</FormLabel>
           <Controller
             name="nascData"
@@ -45,8 +65,11 @@ const FormAgendamento = () => {
               />
             )}
           />
+          {errors.nascData && (
+            <Text color="red.500">{errors.nascData.message}</Text>
+          )}
         </FormControl>
-        <FormControl id="Data de Agendamento">
+        <FormControl id="Data de Agendamento" isInvalid={errors.agendData}>
           <FormLabel>Data de Agendamento</FormLabel>
           <Controller
             name="agendData"
@@ -66,6 +89,9 @@ const FormAgendamento = () => {
               />
             )}
           />
+          {errors.agendData && (
+            <Text color="red.500">{errors.agendData.message}</Text>
+          )}
         </FormControl>
         <Button type="submit" width="120px" alignSelf="center" bg="#f7e3af">
           Agendar

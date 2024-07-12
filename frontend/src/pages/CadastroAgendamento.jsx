@@ -8,7 +8,7 @@ const CadastroAgendamento = () => {
         <Stack align={"center"}>
           <Heading fontSize={"3xl"}>Preencha os campos abaixo</Heading>
         </Stack>
-        <Box rounded={"lg"} boxShadow={"lg"} p={8}>
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} bg = "blue.100">
           <FormAgendamento />
         </Box>
       </Stack>
