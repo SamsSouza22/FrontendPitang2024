@@ -4,16 +4,16 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Input } from "@chakra-ui/react";
 
 const CustomDatePicker = ({
-  selected,
+  selected = null,
   onChange,
-  maxDate,
-  minDate,
-  showTimeSelect,
-  dateFormat,
-  timeFormat,
-  timeIntervals,
-  minTime,
-  maxTime
+  maxDate = null,
+  minDate = null,
+  showTimeSelect = false,
+  dateFormat = "MM/dd/yyyy",
+  timeFormat = "HH:mm",
+  timeIntervals = 60,
+  minTime = null,
+  maxTime = null,
 }) => {
   return (
     <DatePicker
@@ -43,18 +43,6 @@ CustomDatePicker.propTypes = {
   timeIntervals: PropTypes.number,
   minTime: PropTypes.instanceOf(Date),
   maxTime: PropTypes.instanceOf(Date),
-};
-
-CustomDatePicker.defaultProps = {
-  selected: null,
-  maxDate: null,
-  minDate: null,
-  showTimeSelect: false,
-  dateFormat: "MM/dd/yyyy",
-  timeFormat: "HH:mm",
-  timeIntervals: 60,
-  minTime: new Date().setHours(0, 0), 
-  maxTime: new Date().setHours(23, 59), 
 };
 
 export default CustomDatePicker;
