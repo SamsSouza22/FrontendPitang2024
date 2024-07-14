@@ -1,4 +1,5 @@
 import { Container, Flex, Heading, Input, Box } from "@chakra-ui/react";
+import CardAgendamento from "../components/CardAgendamento";
 
 const VisualizarAgendamentos = () => {
   return (
@@ -16,7 +17,8 @@ const VisualizarAgendamentos = () => {
         />
       </Flex>
       <Box p={5} width="100%" minHeight="500px">
-        </Box>
+      <CardAgendamento />
+      </Box>
     </Container>
   );
 };
