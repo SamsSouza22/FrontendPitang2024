@@ -57,7 +57,7 @@ const FormAgendamento = () => {
   });
 
   const onSubmit = (data) => {
-    console.log("Dados do formulário:", data);
+    console.log(data);
   };
 
   return (
