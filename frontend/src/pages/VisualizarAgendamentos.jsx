@@ -13,11 +13,17 @@ const VisualizarAgendamentos = () => {
           maxW="300px"
           p={4}
           boxShadow="md"
-          _focus={{borderColor: "blue.300"}}
+          _focus={{ borderColor: "blue.300" }}
         />
       </Flex>
       <Box p={5} width="100%" minHeight="500px">
-      <CardAgendamento />
+        <CardAgendamento
+          id={1}
+          nome="Teste Card"
+          dataNasc={new Date()}
+          dataAgend={new Date()}
+          status="Não Realizado"
+        />
       </Box>
     </Container>
   );

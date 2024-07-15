@@ -11,6 +11,19 @@ import {
 import PropTypes from "prop-types";
 
 const CardAgendamento = ({ nome, dataNasc, dataAgend, status }) => {
+  const formatarData = (data) => {
+    if (isNaN(data)) {
+      throw new Error("Data inválida");
+    }
+
+    const dia = String(data.getDate()).padStart(2, "0"); // Dia do mês
+    const mes = String(data.getMonth() + 1).padStart(2, "0"); // Mês é zero-indexado
+    const ano = data.getFullYear();
+
+    return `${dia}/${mes}/${ano}`;
+  };
+  const dataNascFormat = formatarData(dataNasc);
+  const dataAgendFormat = formatarData(dataAgend);
   return (
     <Card
       width="350px"
@@ -33,8 +46,8 @@ const CardAgendamento = ({ nome, dataNasc, dataAgend, status }) => {
         </Flex>
       </CardHeader>
       <CardBody>
-        <Text>Data de Nascimento: {dataNasc}</Text>
-        <Text>Data de Agendamento: {dataAgend}</Text>
+        <Text>Data de Nascimento: {dataNascFormat}</Text>
+        <Text>Data de Agendamento: {dataAgendFormat}</Text>
       </CardBody>
       <CardFooter
         display="flex"
@@ -48,11 +61,11 @@ const CardAgendamento = ({ nome, dataNasc, dataAgend, status }) => {
 };
 
 CardAgendamento.propTypes = {
-    id: PropTypes.number.isRequired,
-    nome: PropTypes.string.isRequired,
-    dataNasc: PropTypes.instanceOf(Date).isRequired,
-    dataAgend: PropTypes.instanceOf(Date).isRequired,
-    status: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  nome: PropTypes.string.isRequired,
+  dataNasc: PropTypes.instanceOf(Date).isRequired,
+  dataAgend: PropTypes.instanceOf(Date).isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default CardAgendamento;
