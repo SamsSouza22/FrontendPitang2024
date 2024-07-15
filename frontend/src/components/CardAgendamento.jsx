@@ -10,20 +10,19 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-const CardAgendamento = ({ nome, dataNasc, dataAgend, status }) => {
-  const formatarData = (data) => {
-    if (isNaN(data)) {
-      throw new Error("Data inválida");
+const CardAgendamento = ({ nome, nascData, agendData, status }) => {
+  const formatarData = (data, manterHora = false) => {
+    const [dataNova, hora] = data.split("T");
+    const novaData = dataNova.split("-");
+    if (manterHora) {
+      return `${novaData[2]}/${novaData[1]}/${novaData[0]} ${hora.substring(0,5)}`;
     }
 
-    const dia = String(data.getDate()).padStart(2, "0"); // Dia do mês
-    const mes = String(data.getMonth() + 1).padStart(2, "0"); // Mês é zero-indexado
-    const ano = data.getFullYear();
-
-    return `${dia}/${mes}/${ano}`;
+    return `${novaData[2]}/${novaData[1]}/${novaData[0]}`;
   };
-  const dataNascFormat = formatarData(dataNasc);
-  const dataAgendFormat = formatarData(dataAgend);
+
+  const dataNascFormat = formatarData(nascData);
+  const dataAgendFormat = formatarData(agendData, true);
   return (
     <Card
       width="350px"
@@ -61,10 +60,10 @@ const CardAgendamento = ({ nome, dataNasc, dataAgend, status }) => {
 };
 
 CardAgendamento.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   nome: PropTypes.string.isRequired,
-  dataNasc: PropTypes.instanceOf(Date).isRequired,
-  dataAgend: PropTypes.instanceOf(Date).isRequired,
+  nascData: PropTypes.string.isRequired,
+  agendData: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
 };
 
