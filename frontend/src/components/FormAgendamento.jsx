@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 import CustomDatePicker from "./CustomDatePicker";
+import useModal from "../hooks/useModal";
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: "Informe seu nome" }),
@@ -56,32 +57,33 @@ const FormAgendamento = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const { openModal } = useModal();
+
   const onSubmit = async (data) => {
     // Adiciona o status ao objeto data
     const agendamentoData = {
       ...data,
-      status: "Pendente" // Define o status inicial como "pendente"
+      status: "Pendente", // Define o status inicial como "pendente"
     };
 
     try {
-      const response = await fetch('http://localhost:3000/agendamentos', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/agendamentos", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(agendamentoData)
+        body: JSON.stringify(agendamentoData),
       });
-      
+
       if (response.ok) {
-        console.log('Agendamento salvo com sucesso:', await response.json());
+        openModal('Agendamento salvo com sucesso!');
       } else {
-        console.error('Erro ao salvar o agendamento:', response.statusText);
+        openModal('Erro ao salvar o agendamento: ' + response.statusText);
       }
     } catch (error) {
-      console.error('Erro ao fazer a requisição:', error);
+      openModal('Erro ao fazer a requisição');
     }
   };
-
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} width="330px">
