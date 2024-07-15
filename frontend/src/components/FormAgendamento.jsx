@@ -38,7 +38,7 @@ const formSchema = z.object({
           date &&
           date >= new Date() &&
           date.getHours() >= 7 &&
-          date.getHours() < 16
+          date.getHours() <= 16
         );
       },
       {
@@ -56,9 +56,32 @@ const FormAgendamento = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    // Adiciona o status ao objeto data
+    const agendamentoData = {
+      ...data,
+      status: "Pendente" // Define o status inicial como "pendente"
+    };
+
+    try {
+      const response = await fetch('http://localhost:3000/agendamentos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(agendamentoData)
+      });
+      
+      if (response.ok) {
+        console.log('Agendamento salvo com sucesso:', await response.json());
+      } else {
+        console.error('Erro ao salvar o agendamento:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Erro ao fazer a requisição:', error);
+    }
   };
+
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)} width="330px">
