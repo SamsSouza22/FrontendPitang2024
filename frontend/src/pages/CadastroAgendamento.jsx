@@ -1,5 +1,6 @@
 import { Stack, Flex, Heading, Box } from "@chakra-ui/react";
 import FormAgendamento from "../components/FormAgendamento";
+import ModalProvider from "../contexts/ModalProvider";
 
 const CadastroAgendamento = () => {
   return (
@@ -8,8 +9,10 @@ const CadastroAgendamento = () => {
         <Stack align={"center"}>
           <Heading fontSize={"3xl"}>Realizar Agendamento</Heading>
         </Stack>
-        <Box rounded={"lg"} boxShadow={"lg"} p={8} bg = "blue.100">
-          <FormAgendamento />
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} bg="blue.100">
+          <ModalProvider>
+            <FormAgendamento />
+          </ModalProvider>
         </Box>
       </Stack>
     </Flex>
@@ -17,4 +20,3 @@ const CadastroAgendamento = () => {
 };
 
 export default CadastroAgendamento;
-
