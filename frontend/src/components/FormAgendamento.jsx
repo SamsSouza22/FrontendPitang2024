@@ -60,10 +60,14 @@ const FormAgendamento = () => {
   const { openModal } = useModal();
 
   const onSubmit = async (data) => {
-    // Adiciona o status ao objeto data
+    // Removendo a parte do horário
+    const formattedNascData = data.nascData
+      ? data.nascData.toISOString().split("T")[0]
+      : null;
     const agendamentoData = {
       ...data,
-      status: "Pendente", // Define o status inicial como "pendente"
+      nascData: formattedNascData,
+      status: "Pendente",
     };
 
     try {
@@ -76,12 +80,12 @@ const FormAgendamento = () => {
       });
 
       if (response.ok) {
-        openModal('Agendamento salvo com sucesso!');
+        openModal("Agendamento salvo com sucesso!");
       } else {
-        openModal('Erro ao salvar o agendamento: ' + response.statusText);
+        openModal("Erro ao salvar o agendamento: " + response.statusText);
       }
     } catch (error) {
-      openModal('Erro ao fazer a requisição');
+      openModal("Erro ao fazer a requisição");
     }
   };
 
