@@ -10,7 +10,14 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-const CardAgendamento = ({ nome, nascData, agendData, status }) => {
+const CardAgendamento = ({
+  id,
+  nome,
+  nascData,
+  agendData,
+  status,
+  onAtualizarStatus,
+}) => {
   const formatarData = (data, manterHora = false) => {
     const [dataNova, hora] = data.split("T");
     const novaData = dataNova.split("-");
@@ -23,6 +30,11 @@ const CardAgendamento = ({ nome, nascData, agendData, status }) => {
 
   const dataNascFormat = formatarData(nascData);
   const dataAgendFormat = formatarData(agendData, true);
+
+  const handleAtualizarStatus = () => {
+    onAtualizarStatus(id, "Realizado");
+  };
+
   return (
     <Card
       width="350px"
@@ -37,11 +49,15 @@ const CardAgendamento = ({ nome, nascData, agendData, status }) => {
             {nome}
           </Heading>
           <Button
+            onClick={handleAtualizarStatus}
+            isDisabled={status === "Realizado"}
             alignItems="center"
             bg="#f7af9d"
             color="black"
             _hover={{ bg: "#b0d0d3" }}
-          />
+          >
+            {status === "Realizado" ? "Concluído" : "Confirmar atendimento"}
+          </Button>
         </Flex>
       </CardHeader>
       <CardBody>
@@ -65,6 +81,7 @@ CardAgendamento.propTypes = {
   nascData: PropTypes.string.isRequired,
   agendData: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
+  onAtualizarStatus: PropTypes.func.isRequired,
 };
 
 export default CardAgendamento;
