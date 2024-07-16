@@ -64,9 +64,18 @@ const FormAgendamento = () => {
     const formattedNascData = data.nascData
       ? data.nascData.toISOString().split("T")[0]
       : null;
+
+    // Ajustando a data de agendamento para manter o horário correto
+      const novoAgendData = new Date(data.agendData);
+      novoAgendData.setHours(novoAgendData.getHours() - 3); // Subtraindo 3 horas
+
+      const adjustedAgendData = novoAgendData.toISOString();
+    
+
     const agendamentoData = {
       ...data,
       nascData: formattedNascData,
+      agendData: adjustedAgendData,
       status: "Pendente",
     };
 
