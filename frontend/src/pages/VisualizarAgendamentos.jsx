@@ -16,6 +16,7 @@ const VisualizarAgendamentos = () => {
   const [pagAtual, setPagAtual] = useState(1);
   const [itensPorPag, setItensPorPag] = useState(6);
   const [novoItensPorPag, setNovoItensPorPag] = useState("");
+  const [pesquisaTexto, setPesquisaTexto] = useState(""); 
 
   useEffect(() => {
     fetch("http://localhost:3000/agendamentos")
@@ -48,10 +49,17 @@ const VisualizarAgendamentos = () => {
     setNovoItensPorPag(""); // Limpa o estado intermediário
   };
 
-  const inicio = (pagAtual - 1) * itensPorPag;
-  const itensAtuais = agendamentos.slice(inicio, inicio + itensPorPag);
-  const totalPaginas = Math.ceil(agendamentos.length / itensPorPag);
+  const handlePesquisaTexto = (event) => {
+    setPesquisaTexto(event.target.value); // Atualiza o estado do texto de pesquisa
+  };
+  const agendamentosFiltrados = agendamentos.filter((agendamento) =>
+    agendamento.nome.toLowerCase().includes(pesquisaTexto.toLowerCase())
+  );
 
+
+  const inicio = (pagAtual - 1) * itensPorPag;
+  const itensAtuais = agendamentosFiltrados.slice(inicio, inicio + itensPorPag);
+  const totalPaginas = Math.ceil(agendamentosFiltrados.length / itensPorPag);
   return (
     <Container p={70} maxW="2x" centerContent>
       <Flex as="header" width="100%" alignItems="center" p={4}>
@@ -60,6 +68,8 @@ const VisualizarAgendamentos = () => {
         </Heading>
         <Input
           placeholder="Pesquisar Agendamento"
+          value={pesquisaTexto}
+          onChange={handlePesquisaTexto} // Atualiza o texto de pesquisa enquanto digita
           maxW="300px"
           p={4}
           boxShadow="md"
