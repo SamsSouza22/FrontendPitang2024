@@ -83,7 +83,20 @@ const VisualizarAgendamentos = () => {
             Próxima Página
           </Button>
         </Flex>
-
+        <Flex justifyContent="center" alignItems="center" mt={4}>
+          {Array.from({ length: totalPaginas }, (_, index) => (
+            <Button
+              key={index}
+              onClick={() => handleMudarPag(index + 1)}
+              bg={index + 1 === pagAtual ? "#b0d0d3" : "#f7af9d"}
+              color="black"
+              _hover={{ bg: "#b0d0d3" }}
+              mx={1}
+            >
+              {index + 1}
+            </Button>
+          ))}
+        </Flex>
       </Box>
     </Container>
   );
