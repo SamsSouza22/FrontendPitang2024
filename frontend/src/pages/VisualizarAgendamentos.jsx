@@ -15,6 +15,7 @@ const VisualizarAgendamentos = () => {
   const [agendamentos, setAgendamentos] = useState([]);
   const [pagAtual, setPagAtual] = useState(1);
   const [itensPorPag, setItensPorPag] = useState(6);
+  const [novoItensPorPag, setNovoItensPorPag] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:3000/agendamentos")
@@ -34,6 +35,17 @@ const VisualizarAgendamentos = () => {
 
   const handleMudarPag = (pag) => {
     setPagAtual(pag);
+  };
+
+  const handleMudarItensPorPag = () => {
+    if (novoItensPorPag !== "" && /^\d+$/.test(novoItensPorPag) && novoItensPorPag !== "0") {
+      setItensPorPag(Number(novoItensPorPag));
+      setPagAtual(1);
+    } else {
+      // Trata caso em que o input não é válido
+      alert("Digite apenas números maiores que zero no campo de itens");
+    }
+    setNovoItensPorPag(""); // Limpa o estado intermediário
   };
 
   const inicio = (pagAtual - 1) * itensPorPag;
@@ -96,6 +108,19 @@ const VisualizarAgendamentos = () => {
               {index + 1}
             </Button>
           ))}
+        </Flex>
+        <Flex justifyContent="center" alignItems="center" mt={4} gap={3}>
+        <Text>Itens por página:</Text>
+          <Input
+            placeholder="Itens"
+            value={novoItensPorPag}
+            onChange={(e) => setNovoItensPorPag(e.target.value)}
+            maxW="100px"
+            p={4}
+            boxShadow="md"
+            _focus={{ borderColor: "blue.300" }}
+          />
+          <Button onClick={handleMudarItensPorPag}>Confirmar</Button>
         </Flex>
       </Box>
     </Container>
