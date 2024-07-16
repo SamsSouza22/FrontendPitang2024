@@ -52,14 +52,39 @@ const VisualizarAgendamentos = () => {
   const handlePesquisaTexto = (event) => {
     setPesquisaTexto(event.target.value); // Atualiza o estado do texto de pesquisa
   };
+  
+  const handleAtualizarStatus = (id, novoStatus) => {
+    fetch(`http://localhost:3000/agendamentos/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: novoStatus }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setAgendamentos((prevAgendamentos) =>
+            prevAgendamentos.map((agendamento) =>
+              agendamento.id === id ? { ...agendamento, status: novoStatus } : agendamento
+            )
+          );
+        } else {
+          alert("Erro ao atualizar o status no backend");
+        }
+      })
+      .catch(() => {
+        alert("Erro ao atualizar o status no backend");
+      });
+  };
+
   const agendamentosFiltrados = agendamentos.filter((agendamento) =>
     agendamento.nome.toLowerCase().includes(pesquisaTexto.toLowerCase())
   );
 
-
   const inicio = (pagAtual - 1) * itensPorPag;
   const itensAtuais = agendamentosFiltrados.slice(inicio, inicio + itensPorPag);
   const totalPaginas = Math.ceil(agendamentosFiltrados.length / itensPorPag);
+
   return (
     <Container p={70} maxW="2x" centerContent>
       <Flex as="header" width="100%" alignItems="center" p={4}>
@@ -69,7 +94,7 @@ const VisualizarAgendamentos = () => {
         <Input
           placeholder="Pesquisar Agendamento"
           value={pesquisaTexto}
-          onChange={handlePesquisaTexto} // Atualiza o texto de pesquisa enquanto digita
+          onChange={handlePesquisaTexto}
           maxW="300px"
           p={4}
           boxShadow="md"
@@ -79,7 +104,11 @@ const VisualizarAgendamentos = () => {
       <Box p={5} width="100%" minHeight="500px">
         <SimpleGrid columns={{ base: 1, sm: 2, md: 2, lg: 3 }} spacing={10}>
           {itensAtuais.map((agendamento) => (
-            <CardAgendamento key={agendamento.id} {...agendamento} />
+            <CardAgendamento
+              key={agendamento.id}
+              {...agendamento}
+              onAtualizarStatus={handleAtualizarStatus}
+            />
           ))}
         </SimpleGrid>
         <Flex justifyContent="center" alignItems="center" mt={10} gap={5}>
@@ -120,7 +149,7 @@ const VisualizarAgendamentos = () => {
           ))}
         </Flex>
         <Flex justifyContent="center" alignItems="center" mt={4} gap={3}>
-        <Text>Itens por página:</Text>
+          <Text>Itens por página:</Text>
           <Input
             placeholder="Itens"
             value={novoItensPorPag}
