@@ -27,3 +27,13 @@ test('valida os campos do formulário e exibe mensagens de erro', async () => {
     expect(await screen.findByText(/Informe a data de agendamento/i)).toBeInTheDocument();
 });
 
+test('envia o formulário e abre o modal na submissão bem-sucedida', async () => {
+    // É necessário conexão com o mock
+    renderWithProviders(<FormAgendamento />);
+    fireEvent.change(screen.getByLabelText(/Nome/i), { target: { value: 'Miguel Santos' } });
+    fireEvent.change(screen.getByLabelText(/Data de Nascimento/i), { target: { value: '2000-03-23' } });
+    fireEvent.change(screen.getByLabelText(/Data de Agendamento/i), { target: { value: '2024-07-19T09:00' } });
+
+    fireEvent.submit(screen.getByRole('button', { name: /Agendar/i }));
+    expect(await screen.findByText(/Agendamento salvo com sucesso!/i)).toBeInTheDocument();
+});
