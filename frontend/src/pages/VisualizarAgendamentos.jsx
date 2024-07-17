@@ -19,7 +19,7 @@ const VisualizarAgendamentos = () => {
   const [pesquisaTexto, setPesquisaTexto] = useState(""); 
 
   useEffect(() => {
-    fetch("http://localhost:3000/agendamentos")
+    fetch("http://localhost:5000/api/agendamentos")
       .then((response) => response.json())
       .then((data) => {
         setAgendamentos(data);
@@ -54,7 +54,7 @@ const VisualizarAgendamentos = () => {
   };
   
   const handleAtualizarStatus = (id, novoStatus) => {
-    fetch(`http://localhost:3000/agendamentos/${id}`, {
+    fetch(`http://localhost:5000/api/agendamentos/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
