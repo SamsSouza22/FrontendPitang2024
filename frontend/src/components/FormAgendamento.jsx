@@ -43,7 +43,8 @@ const formSchema = z.object({
         );
       },
       {
-        message: "Horário de agendamento deve estar entre 07:00 e 16:00",
+        message:
+          "Horário de agendamento deve estar entre 07:00 e 16:00 do dia escolhido",
       }
     ),
 });
@@ -60,27 +61,13 @@ const FormAgendamento = () => {
   const { openModal } = useModal();
 
   const onSubmit = async (data) => {
-    // Removendo a parte do horário
-    const formattedNascData = data.nascData
-      ? data.nascData.toISOString().split("T")[0]
-      : null;
-
-    // Ajustando a data de agendamento para manter o horário correto
-      const novoAgendData = new Date(data.agendData);
-      novoAgendData.setHours(novoAgendData.getHours() - 3); // Subtraindo 3 horas
-
-      const adjustedAgendData = novoAgendData.toISOString();
-    
-
     const agendamentoData = {
       ...data,
-      nascData: formattedNascData,
-      agendData: adjustedAgendData,
       status: "Pendente",
     };
 
     try {
-      const response = await fetch("http://localhost:3000/agendamentos", {
+      const response = await fetch("http://localhost:5000/api/agendamentos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +78,7 @@ const FormAgendamento = () => {
       if (response.ok) {
         openModal("Agendamento salvo com sucesso!");
       } else {
-        openModal("Erro ao salvar o agendamento: " + response.statusText);
+        openModal("Esse horário já está ocupado");
       }
     } catch (error) {
       openModal("Erro ao fazer a requisição");
