@@ -87,7 +87,7 @@ const VisualizarAgendamentos = () => {
 
   return (
     <Container p={70} maxW="2x" centerContent>
-      <Flex as="header" width="100%" alignItems="center" p={4}>
+      <Flex as="header" width="100%" alignItems="center" p={2}>
         <Heading size="lg" flex="1" textAlign="inherit">
           Agendamentos
         </Heading>
