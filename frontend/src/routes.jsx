@@ -1,13 +1,24 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Agendamento from "./pages/CadastroAgendamento";
-import VisuAgendamentos from "./pages/VisualizarAgendamentos"
+import VisuAgendamentos from "./pages/VisualizarAgendamentos";
+import NavBar from "./components/NavBar";
 
 const AppRoutes = () => (
   <>
     <BrowserRouter>
       <Routes>
-        <Route element={<Agendamento />} path="/" />
-        <Route element={<VisuAgendamentos />} path="/agendamentos" />
+        <Route
+          element={
+            <>
+              <NavBar />
+
+              <Outlet />
+            </>
+          }
+        >
+          <Route element={<Agendamento />} path="/" />
+          <Route element={<VisuAgendamentos />} path="/agendamentos" />
+        </Route>
       </Routes>
     </BrowserRouter>
   </>
