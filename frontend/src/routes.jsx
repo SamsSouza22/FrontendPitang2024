@@ -6,7 +6,7 @@ const AppRoutes = () => (
   <>
     <BrowserRouter>
       <Routes>
-        <Route element={<Agendamento />} path="/agendar" />
+        <Route element={<Agendamento />} path="/" />
         <Route element={<VisuAgendamentos />} path="/agendamentos" />
       </Routes>
     </BrowserRouter>
