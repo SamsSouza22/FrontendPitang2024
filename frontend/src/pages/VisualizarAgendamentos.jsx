@@ -10,20 +10,25 @@ import {
   Text,
 } from "@chakra-ui/react";
 import CardAgendamento from "../components/CardAgendamento";
+import fetcher from "../services/api";
 
 const VisualizarAgendamentos = () => {
   const [agendamentos, setAgendamentos] = useState([]);
   const [pagAtual, setPagAtual] = useState(1);
   const [itensPorPag, setItensPorPag] = useState(6);
   const [novoItensPorPag, setNovoItensPorPag] = useState("");
-  const [pesquisaTexto, setPesquisaTexto] = useState(""); 
+  const [pesquisaTexto, setPesquisaTexto] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/agendamentos")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const data = await fetcher.get("/api/agendamentos");
         setAgendamentos(data);
-      });
+      } catch (error) {
+        console.error("Erro ao buscar agendamentos:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleProxPag = () => {
@@ -39,7 +44,11 @@ const VisualizarAgendamentos = () => {
   };
 
   const handleMudarItensPorPag = () => {
-    if (novoItensPorPag !== "" && /^\d+$/.test(novoItensPorPag) && novoItensPorPag !== "0") {
+    if (
+      novoItensPorPag !== "" &&
+      /^\d+$/.test(novoItensPorPag) &&
+      novoItensPorPag !== "0"
+    ) {
       setItensPorPag(Number(novoItensPorPag));
       setPagAtual(1);
     } else {
@@ -52,29 +61,20 @@ const VisualizarAgendamentos = () => {
   const handlePesquisaTexto = (event) => {
     setPesquisaTexto(event.target.value); // Atualiza o estado do texto de pesquisa
   };
-  
-  const handleAtualizarStatus = (id, novoStatus) => {
-    fetch(`http://localhost:5000/api/agendamentos/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status: novoStatus }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setAgendamentos((prevAgendamentos) =>
-            prevAgendamentos.map((agendamento) =>
-              agendamento.id === id ? { ...agendamento, status: novoStatus } : agendamento
-            )
-          );
-        } else {
-          alert("Erro ao atualizar o status no backend");
-        }
-      })
-      .catch(() => {
-        alert("Erro ao atualizar o status no backend");
-      });
+
+  const handleAtualizarStatus = async (id, novoStatus) => {
+    try {
+      await fetcher.patch(`/api/agendamentos/${id}`, { status: novoStatus });
+      setAgendamentos((prevAgendamentos) =>
+        prevAgendamentos.map((agendamento) =>
+          agendamento.id === id
+            ? { ...agendamento, status: novoStatus }
+            : agendamento
+        )
+      );
+    } catch (error) {
+      alert("Erro ao atualizar o status no backend");
+    }
   };
 
   const agendamentosFiltrados = agendamentos.filter((agendamento) =>
@@ -114,7 +114,7 @@ const VisualizarAgendamentos = () => {
         <Flex justifyContent="center" alignItems="center" mt={10} gap={5}>
           <Button
             onClick={handlePagAnterior}
-            isDisabled={pagAtual === 1}
+            isDisabled={pagAtual === 1 || itensAtuais.length === 0}
             bg="#f7af9d"
             color="black"
             _hover={{ bg: "#b0d0d3" }}
@@ -122,11 +122,12 @@ const VisualizarAgendamentos = () => {
             Página Anterior
           </Button>
           <Text>
-            Página {pagAtual} de {totalPaginas}
+            Página {agendamentosFiltrados.length === 0 ? 0 : pagAtual} de{" "}
+            {totalPaginas === 0 ? 0 : totalPaginas}
           </Text>
           <Button
             onClick={handleProxPag}
-            isDisabled={pagAtual === totalPaginas}
+            isDisabled={pagAtual === totalPaginas || itensAtuais.length === 0}
             bg="#f7af9d"
             color="black"
             _hover={{ bg: "#b0d0d3" }}

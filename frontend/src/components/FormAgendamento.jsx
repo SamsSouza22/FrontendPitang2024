@@ -13,6 +13,7 @@ import {
 
 import CustomDatePicker from "./CustomDatePicker";
 import useModal from "../hooks/useModal";
+import fetcher from "../services/api";
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: "Informe seu nome" }),
@@ -67,21 +68,10 @@ const FormAgendamento = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/agendamentos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(agendamentoData),
-      });
-
-      if (response.ok) {
-        openModal("Agendamento salvo com sucesso!");
-      } else {
-        openModal("Esse horário já está ocupado");
-      }
+      await fetcher.post("/api/agendamentos", agendamentoData);
+      openModal("Agendamento salvo com sucesso!");
     } catch (error) {
-      openModal("Erro ao fazer a requisição");
+      openModal("Esse horário já está ocupado");
     }
   };
 
