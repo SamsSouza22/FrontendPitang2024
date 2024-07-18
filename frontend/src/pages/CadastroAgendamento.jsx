@@ -7,7 +7,7 @@ const CadastroAgendamento = () => {
     <Flex minH={"85vh"} align={"center"} justify={"center"} bg = "#F9F7F3">
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"3xl"}>Realizar Agendamento</Heading>
+          <Heading fontSize={"3xl"} fontWeight={500}>Realizar Agendamento</Heading>
         </Stack>
         <Box rounded={"lg"} boxShadow={"lg"} p={8} bg="#FFD6FF">
           <ModalProvider>

@@ -45,7 +45,7 @@ const CardAgendamento = ({
     >
       <CardHeader>
         <Flex alignItems="center" justifyContent="space-between">
-          <Heading fontSize="xl" maxW="180px">
+          <Heading fontSize="large" maxW="180px" fontWeight={500}>
             {nome}
           </Heading>
           <Button

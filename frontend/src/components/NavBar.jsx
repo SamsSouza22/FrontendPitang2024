@@ -20,6 +20,7 @@ const NavBar = () => {
             as={RouterLink}
             to="/"
             _hover={{ textDecoration: "none", color: "gray.600" }}
+            fontWeight={500}
             transition="color 0.2s"
           >
             Cadastrar Agendamento
@@ -30,6 +31,7 @@ const NavBar = () => {
             as={RouterLink}
             to="/agendamentos"
             _hover={{ textDecoration: "none", color: "gray.600" }}
+            fontWeight={500}
             transition="color 0.2s"
           >
             Visualizar Agendamentos
