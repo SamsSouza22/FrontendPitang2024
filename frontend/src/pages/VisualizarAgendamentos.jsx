@@ -86,8 +86,8 @@ const VisualizarAgendamentos = () => {
   const totalPaginas = Math.ceil(agendamentosFiltrados.length / itensPorPag);
 
   return (
-    <Container p={70} maxW="2x" centerContent>
-      <Flex as="header" width="100%" alignItems="center" p={2}>
+    <Container p={70} maxW="2x" centerContent bg = "#F9F7F3">
+      <Flex as="header" width="100%" alignItems="center">
         <Heading size="lg" flex="1" textAlign="inherit">
           Agendamentos
         </Heading>
@@ -115,7 +115,7 @@ const VisualizarAgendamentos = () => {
           <Button
             onClick={handlePagAnterior}
             isDisabled={pagAtual === 1 || itensAtuais.length === 0}
-            bg="#f7af9d"
+            bg="#FFD6FF"
             color="black"
             _hover={{ bg: "#b0d0d3" }}
           >
@@ -128,7 +128,7 @@ const VisualizarAgendamentos = () => {
           <Button
             onClick={handleProxPag}
             isDisabled={pagAtual === totalPaginas || itensAtuais.length === 0}
-            bg="#f7af9d"
+            bg="#FFD6FF"
             color="black"
             _hover={{ bg: "#b0d0d3" }}
           >
@@ -140,7 +140,7 @@ const VisualizarAgendamentos = () => {
             <Button
               key={index}
               onClick={() => handleMudarPag(index + 1)}
-              bg={index + 1 === pagAtual ? "#b0d0d3" : "#f7af9d"}
+              bg={index + 1 === pagAtual ? "#FFD6FF" : "#f7af9d"}
               color="black"
               _hover={{ bg: "#b0d0d3" }}
               mx={1}
@@ -160,7 +160,7 @@ const VisualizarAgendamentos = () => {
             boxShadow="md"
             _focus={{ borderColor: "blue.300" }}
           />
-          <Button onClick={handleMudarItensPorPag}>Confirmar</Button>
+          <Button onClick={handleMudarItensPorPag} bg="#FFD6FF">Confirmar</Button>
         </Flex>
       </Box>
     </Container>

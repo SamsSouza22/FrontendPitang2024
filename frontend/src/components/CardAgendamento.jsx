@@ -39,7 +39,7 @@ const CardAgendamento = ({
     <Card
       width="350px"
       shadow="md"
-      borderColor="#f7af9d"
+      borderColor="#E7C6FF"
       borderWidth="8px"
       borderRadius="md"
     >
@@ -52,7 +52,7 @@ const CardAgendamento = ({
             onClick={handleAtualizarStatus}
             isDisabled={status === "Realizado"}
             alignItems="center"
-            bg="#f7af9d"
+            bg="#FFD6FF"
             color="black"
             _hover={{ bg: "#b0d0d3" }}
           >
