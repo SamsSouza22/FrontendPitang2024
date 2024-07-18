@@ -84,11 +84,22 @@ const FormAgendamento = () => {
             name="nome"
             control={control}
             defaultValue=""
-            render={({ field }) => <Input {...field} />}
+            render={({ field }) => (
+              <Input
+                {...field}
+                focusBorderColor="teal.500"
+                errorBorderColor="red.500"
+                borderColor="black"
+              />
+            )}
           />
           {errors.nome && <Text color="red.500">{errors.nome.message}</Text>}
         </FormControl>
-        <FormControl id="Data de Nascimento" isInvalid={errors.nascData}>
+        <FormControl
+          id="Data de Nascimento"
+          isInvalid={errors.nascData}
+          border="black"
+        >
           <FormLabel>Data de Nascimento</FormLabel>
           <Controller
             name="nascData"
@@ -107,7 +118,11 @@ const FormAgendamento = () => {
             <Text color="red.500">{errors.nascData.message}</Text>
           )}
         </FormControl>
-        <FormControl id="Data de Agendamento" isInvalid={errors.agendData}>
+        <FormControl
+          id="Data de Agendamento"
+          isInvalid={errors.agendData}
+          border="black"
+        >
           <FormLabel>Data de Agendamento</FormLabel>
           <Controller
             name="agendData"
@@ -129,7 +144,16 @@ const FormAgendamento = () => {
             <Text color="red.500">{errors.agendData.message}</Text>
           )}
         </FormControl>
-        <Button type="submit" width="120px" alignSelf="center" bg="#f7e3af">
+        <Button
+          type="submit"
+          width="120px"
+          alignSelf="center"
+          bg="#f7e3af"
+          borderColor="black"
+          borderWidth="1px"
+          borderRadius="md"
+          _hover={{ bg: "#b0d0d3", borderColor: "#C8B6FF" }}
+        >
           Agendar
         </Button>
       </Stack>

@@ -27,7 +27,13 @@ const CustomDatePicker = ({
       timeIntervals={timeIntervals}
       minTime={minTime}
       maxTime={maxTime}
-      customInput={<Input />}
+      customInput={
+        <Input
+          focusBorderColor="teal.500"
+          errorBorderColor="red.500"
+          borderColor="black"
+        />
+      }
     />
   );
 };
