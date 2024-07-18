@@ -2,6 +2,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import ModalProvider from '../contexts/ModalProvider';
 import FormAgendamento from '../components/FormAgendamento';
+import fetcher from '../services/api'; 
+
+// Mock do fetcher
+jest.mock('../services/api');
 
 const renderWithProviders = (ui, providerProps = {}, renderOptions = {}) => {
     return render(
@@ -28,7 +32,9 @@ test('valida os campos do formulário e exibe mensagens de erro', async () => {
 });
 
 test('envia o formulário e abre o modal na submissão bem-sucedida', async () => {
-    // É necessário conexão com o mock
+    // Mock do fetcher para simular uma resposta bem-sucedida
+    fetcher.post.mockResolvedValueOnce({ message: 'Agendamento salvo com sucesso!' });
+
     renderWithProviders(<FormAgendamento />);
     fireEvent.change(screen.getByLabelText(/Nome/i), { target: { value: 'Miguel Santos' } });
     fireEvent.change(screen.getByLabelText(/Data de Nascimento/i), { target: { value: '2000-03-23' } });
