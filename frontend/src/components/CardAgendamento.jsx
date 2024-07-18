@@ -56,6 +56,7 @@ const CardAgendamento = ({
           <Flex>
             <IconButton
               onClick={handleMarcarComoRealizado}
+              aria-label="Concluir"
               isDisabled={status === "Realizado" || status === "Não Realizado"}
               alignItems="center"
               bg="#FFD6FF"
@@ -66,6 +67,7 @@ const CardAgendamento = ({
             />
             <IconButton
               onClick={handleMarcarComoNaoRealizado}
+              aria-label="Cancelar"
               isDisabled={status === "Realizado" || status === "Não Realizado"}
               alignItems="center"
               bg="#FFD6FF"
