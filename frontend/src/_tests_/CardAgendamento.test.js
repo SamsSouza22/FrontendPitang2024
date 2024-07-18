@@ -28,3 +28,10 @@ test("deve chamar onAtualizarStatus quando o botão for clicado", () => {
     
     expect(mockAgendamento.onAtualizarStatus).toHaveBeenCalledWith("1", "Realizado");
   });
+
+  test("deve desabilitar o botão se o status for 'Realizado'", () => {
+    render(<CardAgendamento {...mockAgendamento} status="Realizado" />);
+    
+    const button = screen.getByText("Concluído");
+    expect(button).toBeDisabled();
+  });
