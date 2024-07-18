@@ -12,7 +12,7 @@ const mockAgendamento = {
 
 test("deve renderizar o componente com os dados corretos", () => {
   render(<CardAgendamento {...mockAgendamento} />);
-  
+
   expect(screen.getByText("João Silva")).toBeInTheDocument();
   expect(screen.getByText("Data de Nascimento: 01/01/1990")).toBeInTheDocument();
   expect(screen.getByText("Data de Agendamento: 20/07/2023 15:00")).toBeInTheDocument();
@@ -21,17 +21,17 @@ test("deve renderizar o componente com os dados corretos", () => {
 });
 
 test("deve chamar onAtualizarStatus quando o botão for clicado", () => {
-    render(<CardAgendamento {...mockAgendamento} />);
-    
-    const button = screen.getByText("Confirmar atendimento");
-    fireEvent.click(button);
-    
-    expect(mockAgendamento.onAtualizarStatus).toHaveBeenCalledWith("1", "Realizado");
-  });
+  render(<CardAgendamento {...mockAgendamento} />);
 
-  test("deve desabilitar o botão se o status for 'Realizado'", () => {
-    render(<CardAgendamento {...mockAgendamento} status="Realizado" />);
-    
-    const button = screen.getByText("Concluído");
-    expect(button).toBeDisabled();
-  });
+  const button = screen.getByText("Confirmar atendimento");
+  fireEvent.click(button);
+
+  expect(mockAgendamento.onAtualizarStatus).toHaveBeenCalledWith("1", "Realizado");
+});
+
+test("deve desabilitar o botão se o status for 'Realizado'", () => {
+  render(<CardAgendamento {...mockAgendamento} status="Realizado" />);
+
+  const button = screen.getByText("Concluído");
+  expect(button).toBeDisabled();
+});
