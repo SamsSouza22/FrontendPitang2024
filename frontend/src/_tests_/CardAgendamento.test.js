@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import CardAgendamento from "../components/CardAgendamento";
 
 const mockAgendamento = {
@@ -20,3 +20,11 @@ test("deve renderizar o componente com os dados corretos", () => {
   expect(screen.getByText("Confirmar atendimento")).toBeInTheDocument();
 });
 
+test("deve chamar onAtualizarStatus quando o botão for clicado", () => {
+    render(<CardAgendamento {...mockAgendamento} />);
+    
+    const button = screen.getByText("Confirmar atendimento");
+    fireEvent.click(button);
+    
+    expect(mockAgendamento.onAtualizarStatus).toHaveBeenCalledWith("1", "Realizado");
+  });
