@@ -37,3 +37,19 @@ test("deve filtrar agendamentos ao pesquisar", async () => {
     expect(screen.getByText("João Silva")).toBeInTheDocument();
     expect(screen.queryByText("Maria Oliveira")).not.toBeInTheDocument();
 });
+
+test("deve desabilitar botões de paginação corretamente", async () => {
+    fetcher.get.mockResolvedValueOnce(mockAgendamentos);
+    
+    render(<VisualizarAgendamentos />);
+    
+    await waitFor(() => {
+      expect(screen.getByText("Página 0 de 0")).toBeInTheDocument();
+    });
+    
+    const nextButton = screen.getByText("Próxima Página");
+    const prevButton = screen.getByText("Página Anterior");
+    
+    expect(nextButton).toBeDisabled();
+    expect(prevButton).toBeDisabled();
+  });
