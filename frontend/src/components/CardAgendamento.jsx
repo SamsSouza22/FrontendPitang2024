@@ -6,9 +6,15 @@ import {
   Flex,
   Heading,
   Text,
-  Button,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
+import { IconButton } from "@chakra-ui/react";
+import {
+  CheckIcon,
+  CloseIcon,
+  CheckCircleIcon,
+  TimeIcon,
+} from "@chakra-ui/icons";
 
 const CardAgendamento = ({
   id,
@@ -31,33 +37,61 @@ const CardAgendamento = ({
   const dataNascFormat = formatarData(nascData);
   const dataAgendFormat = formatarData(agendData, true);
 
-  const handleAtualizarStatus = () => {
+  const handleMarcarComoRealizado = () => {
     onAtualizarStatus(id, "Realizado");
   };
 
+  const handleMarcarComoNaoRealizado = () => {
+    onAtualizarStatus(id, "Não Realizado");
+  };
+  const getStatusIcon = () => {
+    switch (status) {
+      case "Realizado":
+        return <CheckCircleIcon color="#B2FF7A" />;
+      case "Não Realizado":
+        return <CloseIcon color="#FF857A" />;
+      case "Pendente":
+        return <TimeIcon color="gray.400" />;
+      default:
+        return null;
+    }
+  };
   return (
     <Card
       width="350px"
       shadow="md"
-      borderColor="#f7af9d"
+      borderColor="#E7C6FF"
       borderWidth="8px"
       borderRadius="md"
     >
       <CardHeader>
         <Flex alignItems="center" justifyContent="space-between">
-          <Heading fontSize="xl" maxW="180px">
+          <Heading fontSize="large" maxW="180px" fontWeight={500}>
             {nome}
           </Heading>
-          <Button
-            onClick={handleAtualizarStatus}
-            isDisabled={status === "Realizado"}
-            alignItems="center"
-            bg="#f7af9d"
-            color="black"
-            _hover={{ bg: "#b0d0d3" }}
-          >
-            {status === "Realizado" ? "Concluído" : "Confirmar atendimento"}
-          </Button>
+          <Flex>
+            <IconButton
+              onClick={handleMarcarComoRealizado}
+              aria-label="Concluir"
+              isDisabled={status === "Realizado" || status === "Não Realizado"}
+              alignItems="center"
+              bg="#FFD6FF"
+              color="black"
+              _hover={{ bg: "#b0d0d3" }}
+              icon={<CheckIcon />}
+              mr={2}
+            />
+            <IconButton
+              onClick={handleMarcarComoNaoRealizado}
+              aria-label="Cancelar"
+              isDisabled={status === "Realizado" || status === "Não Realizado"}
+              alignItems="center"
+              bg="#FFD6FF"
+              color="black"
+              _hover={{ bg: "#b0d0d3" }}
+              icon={<CloseIcon />}
+            />
+          </Flex>
         </Flex>
       </CardHeader>
       <CardBody>
@@ -69,7 +103,10 @@ const CardAgendamento = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text>Status: {status}</Text>
+        <Flex alignItems="center">
+          {getStatusIcon()}
+          <Text ml={2}>Status: {status}</Text>
+        </Flex>
       </CardFooter>
     </Card>
   );

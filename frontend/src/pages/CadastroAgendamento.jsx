@@ -4,12 +4,12 @@ import ModalProvider from "../contexts/ModalProvider";
 
 const CadastroAgendamento = () => {
   return (
-    <Flex minH={"90vh"} align={"center"} justify={"center"}>
+    <Flex minH={"85vh"} align={"center"} justify={"center"} bg = "#F9F7F3">
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"3xl"}>Realizar Agendamento</Heading>
+          <Heading fontSize={"3xl"} fontWeight={500}>Realizar Agendamento</Heading>
         </Stack>
-        <Box rounded={"lg"} boxShadow={"lg"} p={8} bg="blue.100">
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} bg="#E7C6FF">
           <ModalProvider>
             <FormAgendamento />
           </ModalProvider>

@@ -17,21 +17,32 @@ test("deve renderizar o componente com os dados corretos", () => {
   expect(screen.getByText("Data de Nascimento: 01/01/1990")).toBeInTheDocument();
   expect(screen.getByText("Data de Agendamento: 20/07/2023 15:00")).toBeInTheDocument();
   expect(screen.getByText("Status: Pendente")).toBeInTheDocument();
-  expect(screen.getByText("Confirmar atendimento")).toBeInTheDocument();
 });
 
-test("deve chamar onAtualizarStatus quando o botão for clicado", () => {
+test("deve chamar onAtualizarStatus quando o botão 'Concluir' for clicado", () => {
   render(<CardAgendamento {...mockAgendamento} />);
 
-  const button = screen.getByText("Confirmar atendimento");
-  fireEvent.click(button);
+  const buttonConcluir = screen.getByLabelText("Concluir");
+  fireEvent.click(buttonConcluir);
 
   expect(mockAgendamento.onAtualizarStatus).toHaveBeenCalledWith("1", "Realizado");
 });
 
-test("deve desabilitar o botão se o status for 'Realizado'", () => {
+test("deve chamar onAtualizarStatus quando o botão 'Cancelar' for clicado", () => {
+  render(<CardAgendamento {...mockAgendamento} />);
+
+  const buttonCancelar = screen.getByLabelText("Cancelar");
+  fireEvent.click(buttonCancelar);
+
+  expect(mockAgendamento.onAtualizarStatus).toHaveBeenCalledWith("1", "Não Realizado");
+});
+
+test("deve desabilitar os botões se o status for 'Realizado'", () => {
   render(<CardAgendamento {...mockAgendamento} status="Realizado" />);
 
-  const button = screen.getByText("Concluído");
-  expect(button).toBeDisabled();
+  const buttonConcluir = screen.getByLabelText("Concluir");
+  const buttonCancelar = screen.getByLabelText("Cancelar");
+
+  expect(buttonConcluir).toBeDisabled();
+  expect(buttonCancelar).toBeDisabled();
 });
