@@ -9,7 +9,7 @@ const CadastroAgendamento = () => {
         <Stack align={"center"}>
           <Heading fontSize={"3xl"} fontWeight={500}>Realizar Agendamento</Heading>
         </Stack>
-        <Box rounded={"lg"} boxShadow={"lg"} p={8} bg="#FFD6FF">
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} bg="#E7C6FF">
           <ModalProvider>
             <FormAgendamento />
           </ModalProvider>

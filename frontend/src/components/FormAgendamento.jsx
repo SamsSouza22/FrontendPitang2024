@@ -87,6 +87,7 @@ const FormAgendamento = () => {
             render={({ field }) => (
               <Input
                 {...field}
+                bg = "#FFD6FF"
                 focusBorderColor="teal.500"
                 errorBorderColor="red.500"
                 borderColor="black"

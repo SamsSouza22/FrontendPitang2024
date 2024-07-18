@@ -9,7 +9,12 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { IconButton } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  CloseIcon,
+  CheckCircleIcon,
+  TimeIcon,
+} from "@chakra-ui/icons";
 
 const CardAgendamento = ({
   id,
@@ -39,7 +44,18 @@ const CardAgendamento = ({
   const handleMarcarComoNaoRealizado = () => {
     onAtualizarStatus(id, "Não Realizado");
   };
-
+  const getStatusIcon = () => {
+    switch (status) {
+      case "Realizado":
+        return <CheckCircleIcon color="#B2FF7A" />;
+      case "Não Realizado":
+        return <CloseIcon color="#FF857A" />;
+      case "Pendente":
+        return <TimeIcon color="gray.400" />;
+      default:
+        return null;
+    }
+  };
   return (
     <Card
       width="350px"
@@ -63,7 +79,7 @@ const CardAgendamento = ({
               color="black"
               _hover={{ bg: "#b0d0d3" }}
               icon={<CheckIcon />}
-              mr={2} 
+              mr={2}
             />
             <IconButton
               onClick={handleMarcarComoNaoRealizado}
@@ -87,7 +103,10 @@ const CardAgendamento = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text>Status: {status}</Text>
+        <Flex alignItems="center">
+          {getStatusIcon()}
+          <Text ml={2}>Status: {status}</Text>
+        </Flex>
       </CardFooter>
     </Card>
   );
