@@ -6,9 +6,10 @@ import {
   Flex,
   Heading,
   Text,
-  Button,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
+import { IconButton } from "@chakra-ui/react";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 const CardAgendamento = ({
   id,
@@ -31,8 +32,12 @@ const CardAgendamento = ({
   const dataNascFormat = formatarData(nascData);
   const dataAgendFormat = formatarData(agendData, true);
 
-  const handleAtualizarStatus = () => {
+  const handleMarcarComoRealizado = () => {
     onAtualizarStatus(id, "Realizado");
+  };
+
+  const handleMarcarComoNaoRealizado = () => {
+    onAtualizarStatus(id, "Não Realizado");
   };
 
   return (
@@ -48,16 +53,27 @@ const CardAgendamento = ({
           <Heading fontSize="large" maxW="180px" fontWeight={500}>
             {nome}
           </Heading>
-          <Button
-            onClick={handleAtualizarStatus}
-            isDisabled={status === "Realizado"}
-            alignItems="center"
-            bg="#FFD6FF"
-            color="black"
-            _hover={{ bg: "#b0d0d3" }}
-          >
-            {status === "Realizado" ? "Concluído" : "Confirmar atendimento"}
-          </Button>
+          <Flex>
+            <IconButton
+              onClick={handleMarcarComoRealizado}
+              isDisabled={status === "Realizado" || status === "Não Realizado"}
+              alignItems="center"
+              bg="#FFD6FF"
+              color="black"
+              _hover={{ bg: "#b0d0d3" }}
+              icon={<CheckIcon />}
+              mr={2} 
+            />
+            <IconButton
+              onClick={handleMarcarComoNaoRealizado}
+              isDisabled={status === "Realizado" || status === "Não Realizado"}
+              alignItems="center"
+              bg="#FFD6FF"
+              color="black"
+              _hover={{ bg: "#b0d0d3" }}
+              icon={<CloseIcon />}
+            />
+          </Flex>
         </Flex>
       </CardHeader>
       <CardBody>
