@@ -12,10 +12,10 @@ Um sistema de agendamento que permite a visualização e o cadastro de agendamen
 
 ## Funcionalidades
 
-- Cadastro de agendamentos.
-- Visualização de agendamentos.
-- Atualização do status dos agendamentos.
-- Pesquisa por nome do agendado.
+- Cadastro de Agendamentos: Formulário para criar novos agendamentos com validação e envio para o backend.
+- Visualização de Agendamentos: Listagem de agendamentos ordenados por dia e hora.
+- Atualização do Status: Botões para atualizar o status de agendamentos para "Realizado" ou "Não Realizado".
+- Pesquisa por Nome: Campo de pesquisa para filtrar agendamentos por nome em tempo real.
 
 ## Tecnologias Utilizadas
 
